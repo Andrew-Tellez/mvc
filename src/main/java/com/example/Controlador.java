@@ -11,19 +11,19 @@ public class Controlador implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==vista.getBtnActualizar()){
-            modelo.Actualizar();
+            modelo.actualizarHectarea(null);
             return;
         }
         if(e.getSource()==vista.getBtnBorrar()){
-            modelo.Borrar();
+            modelo.borrarHectarea(1);
             return;
         }
         if(e.getSource()==vista.getBtnConsultarTodas()){
-            modelo.CosultarTodas();
+            modelo.recuperarHectareas(1);
             return;
         }
         if(e.getSource()==vista.getBtnGuardar()){
-            modelo.Guardar();
+            modelo.guardarHectarea(null);
             return;
         }
         if(e.getSource()==vista.getBtnLimpiar()){
@@ -31,7 +31,7 @@ public class Controlador implements ActionListener {
             return;
         }
         if(e.getSource()==vista.getBtnRecuperar()){
-            modelo.Actualizar();
+            modelo.recuperarHectarea(1);
             return;
         }
     }
