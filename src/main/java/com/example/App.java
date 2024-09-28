@@ -1,4 +1,9 @@
 package com.example;
+
+import java.sql.Connection;
+
+import com.example.db.Conexion;
+
 public class App 
 {
     public static void main( String[] args )
