@@ -10,15 +10,20 @@ docker compose up
 docker compose down
 ```
 
-## compile project with maven
+## maven
+### compile project
 ```bash
 mvn compile
 ```
-## run project
+### run tests
+```bash
+mvn test
+```
+### run project
 ```bash
 mvn exec:java -Dexec.mainClass="com.example.App"
 ```
-## clean target directory
+### clean target directory
 ```bash
 mvn clean
 ```
