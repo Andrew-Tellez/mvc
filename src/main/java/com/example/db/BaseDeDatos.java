@@ -18,7 +18,8 @@ public class BaseDeDatos {
         conexion = Conexion.getConnection();
     }
 
-    public void insertarHectarea(Hectarea hectarea) {
+    public int insertarHectarea(Hectarea hectarea) {
+        int resultado = 0;
         String sql =
             "INSERT INTO hectareas (idHectarea, comunidad, renta, ubicacion) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
@@ -26,13 +27,15 @@ public class BaseDeDatos {
             ps.setString(2, hectarea.getComunidad());
             ps.setInt(3, hectarea.getRenta());
             ps.setString(4, hectarea.getUbicacion());
-            ps.executeUpdate();
+            resultado = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return resultado;
     }
 
-    public void actualizarHectarea(Hectarea hectarea) {
+    public int actualizarHectarea(Hectarea hectarea) {
+        int resultado = 0;
         String sql =
             "UPDATE hectareas SET comunidad = ?, renta = ?, ubicacion = ? WHERE idHectarea = ?";
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
@@ -40,20 +43,23 @@ public class BaseDeDatos {
             ps.setInt(2, hectarea.getRenta());
             ps.setString(3, hectarea.getUbicacion());
             ps.setInt(4, hectarea.getIdHectarea());
-            ps.executeUpdate();
+            resultado = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return resultado;
     }
 
-    public void borrarHectarea(int idHectarea) {
+    public int borrarHectarea(int idHectarea) {
+        int resultado = 0;
         String sql = "DELETE FROM hectareas WHERE idHectarea = ?";
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setInt(1, idHectarea);
-            ps.executeUpdate();
+            resultado = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return resultado;
     }
 
     public Hectarea recuperarHectarea(int idHectarea) {
