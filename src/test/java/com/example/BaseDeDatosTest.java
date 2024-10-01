@@ -3,7 +3,12 @@ package com.example;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.example.db.BaseDeDatos;
+import com.example.db.Conexion;
 import com.example.entities.Hectarea;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import org.junit.jupiter.api.*;
 
 /**
@@ -95,7 +100,7 @@ public class BaseDeDatosTest {
     }
 
     @Test
-    void tetsRegistrosAfectados() {
+    public void tetsRegistrosAfectados() {
         int idHectarea = 6;
         int renta = 100;
         String comunidad = "comunidad";
@@ -115,5 +120,67 @@ public class BaseDeDatosTest {
 
         registrosAfectados = BD.borrarHectarea(idHectarea);
         assertEquals(1, registrosAfectados);
+    }
+
+    @Test
+    public void testRecuperarHectareas() {
+        int idHectarea = 100;
+        int renta = 100;
+        String comunidad = "comunidad";
+        String ubicacion = "ubicacion";
+        BD.insertarHectarea(
+            new Hectarea(idHectarea, renta, comunidad, ubicacion)
+        );
+        idHectarea = 101;
+        renta = 200;
+        comunidad = "comunidad2";
+        ubicacion = "ubicacion2";
+        BD.insertarHectarea(
+            new Hectarea(idHectarea, renta, comunidad, ubicacion)
+        );
+        idHectarea = 102;
+        renta = 300;
+        comunidad = "comunidad3";
+        ubicacion = "ubicacion3";
+        BD.insertarHectarea(
+            new Hectarea(idHectarea, renta, comunidad, ubicacion)
+        );
+        idHectarea = 103;
+        renta = 300;
+        comunidad = "comunidad3";
+        ubicacion = "ubicacion3";
+        BD.insertarHectarea(
+            new Hectarea(idHectarea, renta, comunidad, ubicacion)
+        );
+        idHectarea = 104;
+        renta = 300;
+        comunidad = "comunidad3";
+        ubicacion = "ubicacion3";
+        BD.insertarHectarea(
+            new Hectarea(idHectarea, renta, comunidad, ubicacion)
+        );
+
+        ArrayList<Hectarea> hectareas = BD.recuperarHectareas(1);
+        assertEquals(5, hectareas.size());
+        // hectareas.clear();
+        // hectareas = BD.recuperarHectareas(2);
+        // assertEquals(3, hectareas.size());
+        // hectareas = BD.recuperarHectareas(2);
+        // for (Hectarea hectarea : hectareas) {
+        //     System.out.println(hectarea.getIdHectarea());
+        // }
+        // assertEquals(3, hectareas.size());
+    }
+
+    @AfterAll
+    public void limpiar() {
+        try (Connection con = Conexion.getConnection()) {
+            String sql = "DELETE FROM hectareas";
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
