@@ -82,13 +82,15 @@ public class BaseDeDatos {
         return hectarea;
     }
 
-    public ArrayList<Hectarea> recuperarHectareas() {
+    public ArrayList<Hectarea> recuperarHectareas(int numPagina) {
         ArrayList<Hectarea> hectareas = new ArrayList<>();
-        String sql = "SELECT * FROM hectareas";
-        try (
-            PreparedStatement ps = conexion.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery()
-        ) {
+        String sql =
+            "SELECT * FROM hectareas ORDER BY idHectarea LIMIT 5 OFFSET ?";
+        int desplazamiento = (numPagina - 1) * 5;
+        try (PreparedStatement ps = conexion.prepareStatement(sql);) {
+            ps.setInt(1, desplazamiento);
+            ResultSet rs = ps.executeQuery();
+
             while (rs.next()) {
                 hectareas.add(
                     new Hectarea(
@@ -98,6 +100,9 @@ public class BaseDeDatos {
                         rs.getString("ubicacion")
                     )
                 );
+                // for (Hectarea hectarea : hectareas) {
+                //     System.out.println(hectarea.getIdHectarea());
+                // }
             }
         } catch (SQLException e) {
             e.printStackTrace();
