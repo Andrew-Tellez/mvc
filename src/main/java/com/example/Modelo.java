@@ -18,7 +18,7 @@ public class Modelo {
     }
 
     public Hectarea recuperarHectarea(int idHectarea) {
-        return new Hectarea(idHectarea, idHectarea, null, null);
+        return bd.recuperarHectarea(idHectarea);
     }
 
     public boolean borrarHectarea(int idHectarea) {
