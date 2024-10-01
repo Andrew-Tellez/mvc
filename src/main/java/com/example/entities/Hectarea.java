@@ -1,5 +1,4 @@
 package com.example.entities;
-
 public class Hectarea {
 
     private int idHectarea, renta;
@@ -9,8 +8,8 @@ public class Hectarea {
         int idHectarea,
         int renta,
         String comunidad,
-        String ubicacion
-    ) {
+        String ubicacion) 
+    {
         this.idHectarea = idHectarea;
         this.renta = renta;
         this.comunidad = comunidad;

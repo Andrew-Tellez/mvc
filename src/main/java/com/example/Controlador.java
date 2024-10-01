@@ -1,5 +1,8 @@
 package com.example;
 import java.awt.event.*;
+import java.util.ArrayList;
+
+import com.example.entities.Hectarea;
 public class Controlador implements ActionListener {
     private Vista vista;
     private Modelo modelo;
@@ -11,19 +14,20 @@ public class Controlador implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==vista.getBtnActualizar()){
-            modelo.actualizarHectarea(null);
+            modelo.actualizarHectarea(vista.getHectarea());
             return;
         }
         if(e.getSource()==vista.getBtnBorrar()){
-            modelo.borrarHectarea(1);
+            modelo.borrarHectarea(vista.getHectarea().getIdHectarea());
             return;
         }
         if(e.getSource()==vista.getBtnConsultarTodas()){
-            modelo.recuperarHectareas(1);
+            ArrayList<Hectarea> hectareasRecuperadas = modelo.recuperarHectareas(1);
+            vista.mostrarRecuperadas(hectareasRecuperadas);
             return;
         }
         if(e.getSource()==vista.getBtnGuardar()){
-            modelo.guardarHectarea(null);
+            modelo.guardarHectarea(vista.getHectarea());
             return;
         }
         if(e.getSource()==vista.getBtnLimpiar()){
@@ -31,7 +35,8 @@ public class Controlador implements ActionListener {
             return;
         }
         if(e.getSource()==vista.getBtnRecuperar()){
-            modelo.recuperarHectarea(1);
+            Hectarea hectareaRecuperada = modelo.recuperarHectarea(vista.getHectarea().getIdHectarea());
+            vista.mostrarRecuperada(hectareaRecuperada);
             return;
         }
     }

@@ -1,31 +1,27 @@
 package com.example;
-
+import java.util.ArrayList;
 import com.example.db.BaseDeDatos;
 import com.example.entities.Hectarea;
-
 public class Modelo {
-
     private BaseDeDatos bd;
-
     public Modelo(BaseDeDatos bd) {
         this.bd = bd;
     }
 
     public boolean guardarHectarea(Hectarea nuevaHectarea) {
-        int res = bd.insertarHectarea(nuevaHectarea);
-        return res == 1;
+        return bd.insertarHectarea(nuevaHectarea) == 1;
     }
 
     public Hectarea recuperarHectarea(int idHectarea) {
-        return new Hectarea(idHectarea, idHectarea, null, null);
+        return bd.recuperarHectarea(idHectarea);
+    }
+
+    public ArrayList<Hectarea> recuperarHectareas(int pagina) {
+        return bd.recuperarHectareas(pagina);
     }
 
     public boolean borrarHectarea(int idHectarea) {
         return bd.borrarHectarea(idHectarea) == 1;
-    }
-
-    public Hectarea[] recuperarHectareas(int pagina) {
-        return new Hectarea[] { new Hectarea(pagina, pagina, null, null) };
     }
 
     public boolean actualizarHectarea(Hectarea hectareaAModificar) {

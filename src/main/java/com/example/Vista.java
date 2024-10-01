@@ -1,10 +1,13 @@
 package com.example;
 import java.awt.Font;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import com.example.entities.Hectarea;
 public class Vista extends JFrame{
     private JTextField txtID, txtComunidad, txtRenta, txtUbicacion;
     private JButton btnRecuperar, btnLimpiar, btnGuardar, btnActualizar, btnBorrar, btnConsultarTodas;
@@ -78,6 +81,19 @@ public class Vista extends JFrame{
         add(btnBorrar);
         add(btnConsultarTodas);
         setVisible(true);
+    }
+    public Hectarea getHectarea(){
+        return new Hectarea(Integer.parseInt(txtID.getText()),Integer.parseInt(txtRenta.getText()),txtComunidad.getText(),txtUbicacion.getText());
+    }
+    public void mostrarRecuperada(Hectarea hectareaRecuperada) {
+        txtID.setText(""+hectareaRecuperada.getIdHectarea());
+        txtComunidad.setText(""+hectareaRecuperada.getComunidad());
+        txtRenta.setText(""+hectareaRecuperada.getRenta());
+        txtUbicacion.setText(""+hectareaRecuperada.getUbicacion());
+        txtID.requestFocus();
+    }
+    public void mostrarRecuperadas(ArrayList<Hectarea> hectareasRecuperadas) {
+        
     }
     public void limpiar() {
         txtID.setText("");
