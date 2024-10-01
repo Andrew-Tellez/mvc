@@ -28,6 +28,6 @@ public class Modelo {
     }
 
     public boolean actualizarHectarea(Hectarea hectareaAModificar) {
-        return true;
+        return bd.actualizarHectarea(hectareaAModificar) == 1;
     }
 }
