@@ -12,7 +12,8 @@ public class Modelo {
     }
 
     public boolean guardarHectarea(Hectarea nuevaHectarea) {
-        return true;
+        int res = bd.insertarHectarea(nuevaHectarea);
+        return res == 1;
     }
 
     public Hectarea recuperarHectarea(int idHectarea) {
