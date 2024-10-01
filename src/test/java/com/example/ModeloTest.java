@@ -3,6 +3,7 @@ package com.example;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.example.db.BaseDeDatos;
+import com.example.entities.Hectarea;
 import org.junit.jupiter.api.*;
 
 /**
@@ -22,5 +23,14 @@ public class ModeloTest {
     public void borrarHectarea() {
         int idHectarea = 99999;
         assertEquals(false, modelo.borrarHectarea(idHectarea));
+    }
+
+    @Test
+    public void modificarHectarea() {
+        int idHectarea = 99999;
+        assertEquals(
+            false,
+            modelo.actualizarHectarea(new Hectarea(idHectarea, 0, "", ""))
+        );
     }
 }
