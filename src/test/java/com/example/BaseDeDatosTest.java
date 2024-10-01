@@ -93,4 +93,27 @@ public class BaseDeDatosTest {
         Hectarea hectarea = BD.recuperarHectarea(idHectarea);
         assertNull(hectarea);
     }
+
+    @Test
+    void tetsRegistrosAfectados() {
+        int idHectarea = 6;
+        int renta = 100;
+        String comunidad = "comunidad";
+        String ubicacion = "ubicacion";
+        int registrosAfectados = BD.insertarHectarea(
+            new Hectarea(idHectarea, renta, comunidad, ubicacion)
+        );
+        assertEquals(1, registrosAfectados);
+
+        renta = 200;
+        comunidad = "comunidad2";
+        ubicacion = "ubicacion2";
+        registrosAfectados = BD.actualizarHectarea(
+            new Hectarea(idHectarea, renta, comunidad, ubicacion)
+        );
+        assertEquals(1, registrosAfectados);
+
+        registrosAfectados = BD.borrarHectarea(idHectarea);
+        assertEquals(1, registrosAfectados);
+    }
 }
