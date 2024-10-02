@@ -22,12 +22,17 @@ public class Controlador implements ActionListener {
             return;
         }
         if(e.getSource()==vista.getBtnConsultarTodas()){
-            ArrayList<Hectarea> hectareasRecuperadas = modelo.recuperarHectareas(1);
-            vista.mostrarRecuperadas(hectareasRecuperadas);
+            int paginaActual = vista.getPagina();
+            ArrayList<Hectarea> hectareas = modelo.recuperarHectareas(paginaActual);
+            int totalHectareas = modelo.obtenerTotalHectareas();
+            vista.setTotalPaginas(totalHectareas);
+            vista.actualizarTabla(hectareas);
+            vista.abrirModalConsultarTodas();
             return;
         }
         if(e.getSource()==vista.getBtnGuardar()){
             modelo.guardarHectarea(vista.getHectarea());
+            vista.limpiar();
             return;
         }
         if(e.getSource()==vista.getBtnLimpiar()){
@@ -39,5 +44,18 @@ public class Controlador implements ActionListener {
             vista.mostrarRecuperada(hectareaRecuperada);
             return;
         }
+        if (e.getSource() == vista.getBtnSiguiente()) {
+          vista.setPagina(vista.getPagina() + 1);
+          int paginaActual = vista.getPagina();
+          ArrayList<Hectarea> hectareas = modelo.recuperarHectareas(paginaActual);
+          vista.actualizarTabla(hectareas);
+        }
+        if (e.getSource() == vista.getBtnAnterior()) {
+          vista.setPagina(vista.getPagina() - 1);
+          int paginaActual = vista.getPagina();
+          ArrayList<Hectarea> hectareas = modelo.recuperarHectareas(paginaActual);
+          vista.actualizarTabla(hectareas);
+        }
+        
     }
 }

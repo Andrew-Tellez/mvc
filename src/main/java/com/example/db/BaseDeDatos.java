@@ -1,10 +1,12 @@
 package com.example.db;
 
 import com.example.entities.Hectarea;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -108,5 +110,18 @@ public class BaseDeDatos {
             e.printStackTrace();
         }
         return hectareas;
+    }
+
+    public int obtenerTotalRegistros() {
+      String sqlCount = "SELECT COUNT(*) FROM hectareas";
+      try {
+        Statement resulset = conexion.createStatement();
+        ResultSet resultado = resulset.executeQuery(sqlCount);
+        resultado.next();
+        return Integer.parseInt(resultado.getString(1));
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+      return 0;
     }
 }

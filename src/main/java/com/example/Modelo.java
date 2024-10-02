@@ -2,7 +2,6 @@ package com.example;
 import java.util.ArrayList;
 import com.example.db.BaseDeDatos;
 import com.example.entities.Hectarea;
-import java.util.ArrayList;
 
 public class Modelo {
     private BaseDeDatos bd;
@@ -28,5 +27,9 @@ public class Modelo {
 
     public boolean actualizarHectarea(Hectarea hectareaAModificar) {
         return bd.actualizarHectarea(hectareaAModificar) == 1;
+    }
+
+    public int obtenerTotalHectareas() {
+        return bd.obtenerTotalRegistros();
     }
 }

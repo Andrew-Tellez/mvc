@@ -1,18 +1,31 @@
 package com.example;
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import com.example.entities.Hectarea;
 public class Vista extends JFrame{
     private JTextField txtID, txtComunidad, txtRenta, txtUbicacion;
-    private JButton btnRecuperar, btnLimpiar, btnGuardar, btnActualizar, btnBorrar, btnConsultarTodas;
+    private JButton btnRecuperar, btnLimpiar, btnGuardar, btnActualizar, btnBorrar, btnConsultarTodas, btnAnterior, btnSiguiente;
+    private DefaultTableModel modeloTabla;
+    private JDialog modalConsultarTodas;
+    private int paginaActual, totalPaginas;
+
     public Vista(){
         super("Catalogo hectareas");
+        paginaActual = 1;
+        totalPaginas = 0;
         hazInterfaz();
     }
     private void hazInterfaz() {
@@ -36,6 +49,27 @@ public class Vista extends JFrame{
         btnActualizar = new JButton("Actualizar");
         btnBorrar = new JButton("Borrar");
         btnConsultarTodas = new JButton("Consultar Todas");
+
+        modalConsultarTodas = new JDialog(this, true);
+        modalConsultarTodas.setSize(650, 350);
+        modalConsultarTodas.setTitle("Consultar todas");
+        modalConsultarTodas.setLocationRelativeTo(null);
+        String cols[] = {"ID", "Comunidad", "Renta", "Ubicacion"};
+        JTable tabla = new JTable();
+        JScrollPane scrollPane = new JScrollPane(tabla);
+        modeloTabla = new DefaultTableModel();
+        modeloTabla.setColumnIdentifiers(cols);
+        tabla.setModel(modeloTabla);
+
+        btnAnterior = new JButton("Anterior");
+        btnSiguiente = new JButton("Siguiente");
+        JPanel panel = new JPanel();
+        panel.add(btnAnterior);
+        panel.add(btnSiguiente);
+
+        modalConsultarTodas.add(scrollPane, BorderLayout.CENTER);
+        modalConsultarTodas.add(panel, BorderLayout.SOUTH);
+
         {
             titulobl.setBounds((getWidth()/2)-150, 10, 300, 30);
             IDlbl.setBounds(30, 50, 200, 25);
@@ -92,8 +126,31 @@ public class Vista extends JFrame{
         txtUbicacion.setText(""+hectareaRecuperada.getUbicacion());
         txtID.requestFocus();
     }
-    public void mostrarRecuperadas(ArrayList<Hectarea> hectareasRecuperadas) {
-        
+    public void abrirModalConsultarTodas() {
+      modalConsultarTodas.setVisible(true);
+    }
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public void actualizarTabla(ArrayList<Hectarea> hectareas) {
+      modeloTabla.setRowCount(0);
+      Vector fila;
+      for (int i = 0; i < hectareas.size(); i++) {
+        Hectarea hectareaActual = hectareas.get(i);
+
+        fila = new Vector<>();
+        fila.add(hectareaActual.getIdHectarea());
+        fila.add(hectareaActual.getComunidad());
+        fila.add(hectareaActual.getRenta());
+        fila.add(hectareaActual.getUbicacion());
+
+        modeloTabla.addRow(fila);
+      }
+      btnAnterior.setEnabled(paginaActual != 1);
+      btnSiguiente.setEnabled(paginaActual < totalPaginas);
+      modalConsultarTodas.update(modalConsultarTodas.getGraphics());
+    }
+    public void setTotalPaginas(int totalHectareas) {
+      int totalPaginas = (int) Math.ceil((double) totalHectareas / 5);
+      this.totalPaginas = totalPaginas;
     }
     public void limpiar() {
         txtID.setText("");
@@ -109,6 +166,8 @@ public class Vista extends JFrame{
         btnActualizar.addActionListener(controlador);
         btnBorrar.addActionListener(controlador);
         btnConsultarTodas.addActionListener(controlador);
+        btnSiguiente.addActionListener(controlador);
+        btnAnterior.addActionListener(controlador);
     }
     public void setTxtID(JTextField txtID) {
         this.txtID = txtID;
@@ -151,5 +210,17 @@ public class Vista extends JFrame{
     }
     public JTextField getTxtID() {
         return txtID;
+    }
+    public JButton getBtnAnterior() {
+      return btnAnterior;
+    }
+    public JButton getBtnSiguiente() {
+      return btnSiguiente;
+    }
+    public int getPagina() {
+      return paginaActual;
+    }
+    public void setPagina(int nuevaPagina) {
+      paginaActual = nuevaPagina;
     }
 }
