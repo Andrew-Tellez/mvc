@@ -6,9 +6,11 @@ import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -19,6 +21,7 @@ public class Vista extends JFrame {
 
     private JTextField txtID, txtComunidad, txtRenta, txtUbicacion;
     private JButton btnRecuperar, btnLimpiar, btnGuardar, btnActualizar, btnBorrar, btnConsultarTodas, btnAnterior, btnSiguiente;
+    private JCheckBox chkHabilitar;
     private DefaultTableModel modeloTabla;
     private JDialog modalConsultarTodas;
     private int paginaActual, totalPaginas;
@@ -41,6 +44,7 @@ public class Vista extends JFrame {
         JLabel Comunidadlbl = new JLabel("Ingresa la comunidad:");
         JLabel Rentalbl = new JLabel("Ingresa la renta:");
         JLabel Ubibl = new JLabel("Ingresa la ubicacion:");
+        chkHabilitar = new JCheckBox("Habilitar edición");
         txtID = new JTextField(20);
         txtComunidad = new JTextField(20);
         txtRenta = new JTextField(20);
@@ -49,6 +53,7 @@ public class Vista extends JFrame {
         btnLimpiar = new JButton("Limpiar");
         btnGuardar = new JButton("Guardar");
         btnActualizar = new JButton("Actualizar");
+        btnActualizar.setEnabled(false);
         btnBorrar = new JButton("Borrar");
         btnConsultarTodas = new JButton("Consultar Todas");
 
@@ -91,6 +96,7 @@ public class Vista extends JFrame {
             btnGuardar.setBounds(390, 210, 150, 30);
 
             btnActualizar.setBounds(30, 250, 150, 30);
+            chkHabilitar.setBounds(30, 285, 150, 30);
             btnBorrar.setBounds(210, 250, 150, 30);
             btnConsultarTodas.setBounds(390, 250, 150, 30);
         }
@@ -114,6 +120,7 @@ public class Vista extends JFrame {
         add(btnLimpiar);
         add(btnGuardar);
         add(btnActualizar);
+        add(chkHabilitar);
         add(btnBorrar);
         add(btnConsultarTodas);
         setVisible(true);
@@ -173,6 +180,14 @@ public class Vista extends JFrame {
         txtID.requestFocus();
     }
 
+    public void MostarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    public int confirmar(String string) {
+        return JOptionPane.showConfirmDialog(this, string);
+    }
+
     public void setControlador(Controlador controlador) {
         btnRecuperar.addActionListener(controlador);
         btnLimpiar.addActionListener(controlador);
@@ -182,6 +197,7 @@ public class Vista extends JFrame {
         btnConsultarTodas.addActionListener(controlador);
         btnSiguiente.addActionListener(controlador);
         btnAnterior.addActionListener(controlador);
+        chkHabilitar.addActionListener(controlador);
     }
 
     public void setTxtID(JTextField txtID) {
@@ -254,5 +270,9 @@ public class Vista extends JFrame {
 
     public void setPagina(int nuevaPagina) {
         paginaActual = nuevaPagina;
+    }
+
+    public JCheckBox getChkHabilitar() {
+        return chkHabilitar;
     }
 }
