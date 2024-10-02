@@ -46,12 +46,8 @@ public class Controlador implements ActionListener {
                 return;
             }
 
-            if (
-                vista.confirmar(
-                    "¿Está seguro de que desea actualizar la hectárea?"
-                ) !=
-                0
-            ) {
+            int confirmar = vista.confirmar("¿Está seguro de que desea actualizar la hectárea?");
+            if (confirmar != 0) {
                 return;
             }
 
@@ -71,8 +67,7 @@ public class Controlador implements ActionListener {
             if (
                 modelo.recuperarHectarea(
                     Integer.parseInt(vista.getTxtID().getText())
-                ) ==
-                null
+                ) == null
             ) {
                 vista.MostarMensaje(
                     "no existe una hectárea con el ID " +
@@ -80,12 +75,9 @@ public class Controlador implements ActionListener {
                 );
                 return;
             }
-            if (
-                vista.confirmar(
-                    "¿Está seguro de que desea borrar la hectárea?"
-                ) !=
-                0
-            ) {
+
+            int confirmar = vista.confirmar("¿Está seguro de que desea borrar la hectárea?");
+            if (confirmar != 0) {
                 return;
             }
             modelo.borrarHectarea(Integer.parseInt(vista.getTxtID().getText()));
@@ -143,8 +135,7 @@ public class Controlador implements ActionListener {
             if (
                 modelo.recuperarHectarea(
                     Integer.parseInt(vista.getTxtID().getText())
-                ) !=
-                null
+                ) != null
             ) {
                 vista.MostarMensaje(
                     "existe una hectárea con el ID " +
@@ -155,8 +146,7 @@ public class Controlador implements ActionListener {
             if (
                 vista.confirmar(
                     "¿Está seguro de que desea guardar la hectárea?"
-                ) !=
-                0
+                ) != 0
             ) {
                 return;
             }
@@ -215,14 +205,14 @@ public class Controlador implements ActionListener {
             if (vista.getChkHabilitar().isSelected()) {
                 if (vista.getTxtID().getText().isEmpty()) {
                     vista.MostarMensaje("El campo ID no puede estar vacío");
-                    vista.getChkHabilitar().setSelected(false);
+                    vista.toggleCheckbox(false);;
                     return;
                 }
                 if (!vista.getTxtID().getText().matches("[0-9]+")) {
                     vista.MostarMensaje(
                         "El campo ID debe ser un número entero"
                     );
-                    vista.getChkHabilitar().setSelected(false);
+                    vista.toggleCheckbox(false);;
                     vista.limpiar();
                     return;
                 }
@@ -236,24 +226,14 @@ public class Controlador implements ActionListener {
                         "no existe una hectárea con el ID " +
                         vista.getTxtID().getText()
                     );
-                    vista.getChkHabilitar().setSelected(false);
+                    vista.toggleCheckbox(false);;
                     vista.limpiar();
                     return;
                 }
-                vista.getBtnBorrar().setEnabled(false);
-                vista.getBtnActualizar().setEnabled(true);
-                vista.getBtnGuardar().setEnabled(false);
-                vista.getBtnLimpiar().setEnabled(false);
-                vista.getBtnRecuperar().setEnabled(false);
-                vista.getTxtID().setEnabled(false);
+                vista.modoActualizar();
                 return;
             }
-            vista.getBtnBorrar().setEnabled(true);
-            vista.getBtnActualizar().setEnabled(false);
-            vista.getBtnGuardar().setEnabled(true);
-            vista.getBtnLimpiar().setEnabled(true);
-            vista.getBtnRecuperar().setEnabled(true);
-            vista.getTxtID().setEnabled(true);
+            vista.modoNormal();
             return;
         }
     }

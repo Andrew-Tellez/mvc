@@ -188,6 +188,28 @@ public class Vista extends JFrame {
         return JOptionPane.showConfirmDialog(this, string);
     }
 
+    public void modoActualizar() {
+      btnBorrar.setEnabled(false);
+      btnActualizar.setEnabled(true);
+      btnGuardar.setEnabled(false);
+      btnLimpiar.setEnabled(false);
+      btnRecuperar.setEnabled(false);
+      txtID.setEnabled(false);
+    }
+
+    public void modoNormal() {
+      btnBorrar.setEnabled(true);
+      btnActualizar.setEnabled(false);
+      btnGuardar.setEnabled(true);
+      btnLimpiar.setEnabled(true);
+      btnRecuperar.setEnabled(true);
+      txtID.setEnabled(true);
+    }
+
+    public void toggleCheckbox(boolean estado) {
+      chkHabilitar.setSelected(estado);
+    }
+
     public void setControlador(Controlador controlador) {
         btnRecuperar.addActionListener(controlador);
         btnLimpiar.addActionListener(controlador);
